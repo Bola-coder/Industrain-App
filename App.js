@@ -11,6 +11,9 @@ import Onboarding from "./app/screens/Onboarding/Onboarding";
 import OnboardingTwo from "./app/screens/Onboarding/OnboardingTwo";
 import OnboardingThree from "./app/screens/Onboarding/OnboardingThree";
 import Signup from "./app/screens/Signup/Signup";
+import Login from "./app/screens/Login/Login";
+import ForgetPassword from "./app/screens/ForgetPassword/ForgetPassword";
+import CreateNewPassword from "./app/screens/CreateNewPassword/CreateNewPassword";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -36,6 +39,21 @@ export default function App() {
           <Stack.Screen
             name="Signup"
             component={Signup}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ForgetPassword"
+            component={ForgetPassword}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CreateNewPassword"
+            component={CreateNewPassword}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

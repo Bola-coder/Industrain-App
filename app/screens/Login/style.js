@@ -1,34 +1,34 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  signup: {
+  login: {
     padding: 20,
   },
 
-  signupHeader: {
+  loginHeader: {
     paddingVertical: 10,
     marginTop: 20,
   },
 
-  signupHeaderMain: {
+  loginHeaderMain: {
     fontSize: 30,
     fontWeight: 700,
     color: "#1B4A58",
   },
 
-  signupHeaderSub: {
+  loginHeaderSub: {
     fontSize: 18,
   },
 
-  signupForm: {
+  loginForm: {
     marginTop: 20,
   },
 
-  signupInputGroup: {
+  loginInputGroup: {
     position: "relative",
   },
 
-  signupInput: {
+  loginInput: {
     padding: 15,
     backgroundColor: "#E3E9EC",
     color: "#828282",
@@ -37,26 +37,20 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
 
-  signupInputIcon: {
+  loginInputIcon: {
     position: "absolute",
     right: 20,
     top: 30,
   },
 
-  signupAgreement: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  forgotPassword: {
     marginVertical: 10,
   },
 
-  signupAgreementCheckbox: {
-    width: 30,
-    flexBasis: "6%",
-  },
-
-  signupAgreementText: {
-    flexBasis: "90%",
+  forgotPasswordText: {
+    fontSize: 18,
+    fontWeight: 500,
+    color: "#1B4A58",
   },
 
   btn: {
