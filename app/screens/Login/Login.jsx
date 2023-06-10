@@ -5,6 +5,10 @@ import styles from "./style";
 import AuthButton from "../../components/AuthButton";
 
 const Login = ({ navigation }) => {
+  const handlePress = () => {
+    navigation.navigate("OTP");
+  };
+
   return (
     <View style={styles.login}>
       <View style={styles.loginHeader}>
@@ -37,7 +41,7 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.btn}>
-          <AuthButton text={"Login"} />
+          <AuthButton text={"Login"} onPress={handlePress} />
         </View>
       </View>
       <Text style={styles.footText}>

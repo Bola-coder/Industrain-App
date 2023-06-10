@@ -14,6 +14,8 @@ import Signup from "./app/screens/Signup/Signup";
 import Login from "./app/screens/Login/Login";
 import ForgetPassword from "./app/screens/ForgetPassword/ForgetPassword";
 import CreateNewPassword from "./app/screens/CreateNewPassword/CreateNewPassword";
+import OTPScreen from "./app/screens/OTP/OTPScreen";
+import JoinUs from "./app/screens/JoinUs/JoinUs";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -54,6 +56,16 @@ export default function App() {
           <Stack.Screen
             name="CreateNewPassword"
             component={CreateNewPassword}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="OTP"
+            component={OTPScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="JoinUS"
+            component={JoinUs}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

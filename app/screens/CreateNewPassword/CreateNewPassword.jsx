@@ -41,7 +41,7 @@ const CreateNewPassword = ({ navigation }) => {
           />
         </View>
         <View style={styles.btn}>
-          <AuthButton text={"Recover Password"} />
+          <AuthButton text={"Set New Password"} />
         </View>
       </View>
     </View>

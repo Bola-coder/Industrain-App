@@ -6,6 +6,9 @@ import styles from "./style";
 import AuthButton from "../../components/AuthButton";
 
 const Signup = ({ navigation }) => {
+  const handlePress = () => {
+    navigation.navigate("OTP");
+  };
   return (
     <View style={styles.signup}>
       <View style={styles.signupHeader}>
@@ -38,7 +41,7 @@ const Signup = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.btn}>
-          <AuthButton text={"Create Account"} />
+          <AuthButton text={"Create Account"} onPress={handlePress} />
         </View>
       </View>
       <Text style={styles.footText}>
