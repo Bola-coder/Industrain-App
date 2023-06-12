@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./style";
 
-const JoinUs = () => {
+const JoinUs = ({ navigation }) => {
   return (
     <View style={styles.joinUs}>
       <Image
@@ -12,12 +12,21 @@ const JoinUs = () => {
       <View style={styles.joinUsContent}>
         <Text style={styles.joinUsContentText}>Join Us As</Text>
         <View style={styles.joinUsBtns}>
-          <TouchableOpacity style={styles.joinUsBtn} activeOpacity={0.6}>
+          <TouchableOpacity
+            style={styles.joinUsBtn}
+            activeOpacity={0.6}
+            onPress={() => {
+              navigation.navigate("StudentProfileSetting");
+            }}
+          >
             <Text style={styles.joinUsBtnText}>Student</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.joinUsBtn, styles.joinUsBtnDark]}
             activeOpacity={0.6}
+            onPress={() => {
+              navigation.navigate("StudentProfileSetting");
+            }}
           >
             <Text style={[styles.joinUsBtnText, styles.joinUsBtnTextDark]}>
               Employer
