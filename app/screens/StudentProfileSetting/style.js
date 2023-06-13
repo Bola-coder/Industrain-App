@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
   form: {
     paddingTop: 20,
-    height: "70%",
+    height: "80%",
   },
 
   formHeader: {
@@ -71,8 +71,9 @@ const styles = StyleSheet.create({
   },
 
   submitButton: {
-    position: "absolute",
-    bottom: "5%",
+    // position: "absolute",
+    // bottom: "5%",
+    marginTop: 20,
     alignSelf: "center",
     padding: 15,
     backgroundColor: "#1B4A58",
@@ -91,6 +92,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: "#FFF",
+  },
+
+  uploadContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#E3E9EC",
+    marginVertical: 20,
+    padding: 10,
+    borderRadius: 6,
+    // Amdroid border styles
+    elevation: 1,
+    // IOS border styles
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+  },
+
+  uploadText: {
+    marginLeft: 20,
+    color: "#828282",
+  },
+
+  uploadTextMain: {
+    fontSize: 16,
+    color: "#828282",
+    paddingVertical: 5,
+  },
+
+  uploadTextSub: {
+    fontSize: 12,
+    color: "#828282",
   },
 });
 

@@ -78,19 +78,70 @@ const StudentProfileSetting = ({ navigation }) => {
           )}
         />
       </View>
-      <View style={styles.form}>
-        <Text style={styles.formHeader}>Personal Information</Text>
-        <View style={styles.formGroup}>
-          <TextInput placeholder="Full Name" style={styles.textInput} />
-          <TextInput placeholder="Phone Number" style={styles.textInput} />
-          <TextInput placeholder="Gender" style={styles.textInput} />
-          <TextInput placeholder="Address" style={styles.textInput} />
-          <TextInput placeholder="DOB" style={styles.textInput} />
+      {currentPosition === 0 ? (
+        <View style={styles.form}>
+          <Text style={styles.formHeader}>Personal Information</Text>
+          <View style={styles.formGroup}>
+            <TextInput placeholder="Full Name" style={styles.textInput} />
+            <TextInput placeholder="Phone Number" style={styles.textInput} />
+            <TextInput placeholder="Gender" style={styles.textInput} />
+            <TextInput placeholder="Address" style={styles.textInput} />
+            <TextInput placeholder="DOB" style={styles.textInput} />
+          </View>
+          <TouchableOpacity
+            style={styles.submitButton}
+            activeOpacity={0.7}
+            onPress={handleNextStep}
+          >
+            <Text style={styles.submitButtonText}>Save and Continue</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-      <TouchableOpacity style={styles.submitButton} activeOpacity={0.7}>
-        <Text style={styles.submitButtonText}>Save and Continue</Text>
-      </TouchableOpacity>
+      ) : currentPosition === 1 ? (
+        <View style={styles.form}>
+          <Text style={styles.formHeader}>Personal Information</Text>
+          <View style={styles.formGroup}>
+            <TextInput placeholder="Name of School" style={styles.textInput} />
+            <TextInput placeholder="School Degree" style={styles.textInput} />
+            <TextInput placeholder="Course" style={styles.textInput} />
+            <TextInput placeholder="Level" style={styles.textInput} />
+            <TextInput placeholder="Passing Year" style={styles.textInput} />
+          </View>
+          <TouchableOpacity
+            style={styles.submitButton}
+            activeOpacity={0.7}
+            onPress={handleNextStep}
+          >
+            <Text style={styles.submitButtonText}>Save and Continue</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.form}>
+          <Text style={styles.formHeader}>Upload Document</Text>
+          <View style={styles.uploadContainer}>
+            <FontAwesomeIcon name="file" size={24} />
+            <View style={styles.uploadText}>
+              <Text style={styles.uploadTextMain}>Placement Letter</Text>
+              <Text style={styles.uploadTextSub}>2mb</Text>
+            </View>
+          </View>
+          <View style={styles.uploadContainer}>
+            <FontAwesomeIcon name="file" size={24} />
+            <View style={styles.uploadText}>
+              <Text style={styles.uploadTextMain}>Attach Cover Letter</Text>
+              <Text style={styles.uploadTextSub}>
+                Upload 5mb max in doc or pdf
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.submitButton}
+            activeOpacity={0.7}
+            onPress={handleNextStep}
+          >
+            <Text style={styles.submitButtonText}>Save and Continue</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 };
