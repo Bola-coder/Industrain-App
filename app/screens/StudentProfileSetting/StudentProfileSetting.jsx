@@ -39,6 +39,8 @@ const StudentProfileSetting = ({ navigation }) => {
   const handleNextStep = () => {
     if (currentPosition < 2) {
       setCurrentPosition((prev) => prev + 1);
+    } else {
+      navigation.navigate("Main");
     }
   };
   return (

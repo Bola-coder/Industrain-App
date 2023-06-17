@@ -17,6 +17,8 @@ import CreateNewPassword from "./app/screens/CreateNewPassword/CreateNewPassword
 import OTPScreen from "./app/screens/OTP/OTPScreen";
 import JoinUs from "./app/screens/JoinUs/JoinUs";
 import StudentProfileSetting from "./app/screens/StudentProfileSetting/StudentProfileSetting";
+import HomeScreen from "./app/screens/Home/HomeScreen";
+import TabContainer from "./app/components/TabContainer";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -72,6 +74,11 @@ export default function App() {
           <Stack.Screen
             name="StudentProfileSetting"
             component={StudentProfileSetting}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Main"
+            component={TabContainer}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

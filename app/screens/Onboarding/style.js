@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
   onboardingText: {
     textAlign: "center",
     marginTop: 50,
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 700,
     color: "#333333",
   },
 
   onboardingTextDark: {
     color: "#fff",
-    fontSize: 45,
+    fontSize: 35,
     marginTop: 20,
   },
 
