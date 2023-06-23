@@ -8,7 +8,7 @@ import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
 import { FlatList } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const categories = [
     {
       img: require("./../../../assets/scienceIcon.png"),
@@ -66,6 +66,11 @@ const HomeScreen = () => {
       role: "Water Management",
     },
   ];
+
+  // HandleSearch function
+  const handleSearch = () => {
+    navigation.navigate("Search");
+  };
   return (
     <ScrollView style={styles.home}>
       <View style={styles.homeHeader}>
@@ -76,7 +81,7 @@ const HomeScreen = () => {
         <Image source={require("./../../../assets/Notification.png")} />
       </View>
       <View style={styles.inputContainer}>
-        <SearchComponent />
+        <SearchComponent useIcon={true} onIconPress={handleSearch} />
       </View>
       <View style={styles.homeCTA}>
         <View style={styles.homeCTAContent}>

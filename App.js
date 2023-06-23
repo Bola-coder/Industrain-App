@@ -19,6 +19,7 @@ import JoinUs from "./app/screens/JoinUs/JoinUs";
 import StudentProfileSetting from "./app/screens/StudentProfileSetting/StudentProfileSetting";
 import HomeScreen from "./app/screens/Home/HomeScreen";
 import TabContainer from "./app/components/TabContainer";
+import SearchScreen from "./app/screens/Search/SearchScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -76,6 +77,12 @@ export default function App() {
             component={StudentProfileSetting}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ headerShown: false }}
+          />
+          {/* Main Tab Screens */}
           <Stack.Screen
             name="Main"
             component={TabContainer}
