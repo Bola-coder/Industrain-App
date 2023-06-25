@@ -6,7 +6,6 @@ import { TouchableOpacity } from "react-native";
 import CategoriesCard from "../../components/CategoriesCard";
 import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
-import { FlatList } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
   const categories = [
