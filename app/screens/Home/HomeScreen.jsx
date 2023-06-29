@@ -1,13 +1,16 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
+import { View, Text, Image, Alert } from "react-native";
+import React, { useEffect } from "react";
 import styles from "./styles";
 import SearchComponent from "../../components/SearchComponent";
 import { TouchableOpacity } from "react-native";
 import CategoriesCard from "../../components/CategoriesCard";
 import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
-
+import { useAuth } from "../../context/AuthContext";
+import { useUserContext } from "../../context/UserContext";
 const HomeScreen = ({ navigation }) => {
+  const { user, logout } = useAuth();
+  const { userDetails, getUserDetails } = useUserContext();
   const categories = [
     {
       img: require("./../../../assets/scienceIcon.png"),
@@ -66,16 +69,26 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
 
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
   // HandleSearch function
   const handleSearch = () => {
     navigation.navigate("Search");
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    Alert.alert("Signout successful");
+    navigation.navigate("Login");
   };
   return (
     <ScrollView style={styles.home}>
       <View style={styles.homeHeader}>
         <View style={styles.homeHeaderText}>
           <Text style={styles.homeHeaderTextMain}>Hello 👋</Text>
-          <Text style={styles.homeHeaderTextInner}>Abolarinwa</Text>
+          <Text style={styles.homeHeaderTextInner}>{userDetails?.name}</Text>
         </View>
         <Image source={require("./../../../assets/Notification.png")} />
       </View>
@@ -88,7 +101,9 @@ const HomeScreen = ({ navigation }) => {
             Find companies you want for Industrial Training
           </Text>
           <TouchableOpacity style={styles.homeCTABtn} activeOpacity={0.7}>
-            <Text style={styles.homeCTABtnText}>Explore</Text>
+            <Text style={styles.homeCTABtnText} onPress={handleLogout}>
+              Explore
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.homeCTAImageContainer}>

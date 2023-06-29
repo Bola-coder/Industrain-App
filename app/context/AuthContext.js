@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import AsyncStorage from "../utils/AsyncStorage";
@@ -26,6 +27,8 @@ const AuthProvider = ({ children }) => {
       if (currUser) {
         setAuthenticated(true);
         getUserDataFromDB(currUser);
+      } else {
+        return;
       }
     });
     return () => unsuscribe;
@@ -71,6 +74,16 @@ const AuthProvider = ({ children }) => {
           addDoc(colRef, {
             email: user.email,
             uid: user.uid,
+            name: "",
+            phone: "",
+            gender: "",
+            address: "",
+            dob: "",
+            school: "",
+            degree: "",
+            course: "",
+            level: "",
+            passingYear: "",
           })
             .then(() => {
               console.log("User profile created successfully");
@@ -140,12 +153,17 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  const logout = () => {
+  const logout = async () => {
     console.log("Signing out");
-    signOut(auth)
-      .then(() => {
-        AsyncStorage.deleteDataFromStorage("@userData");
-        console.log("User signed out successfully");
+    await signOut(auth)
+      .then(async () => {
+        try {
+          await AsyncStorage.deleteDataFromStorage("@userData");
+          setAuthenticated(false);
+          console.log("User signed out successfully");
+        } catch (err) {
+          console.log("Failed to signout");
+        }
       })
       .catch((err) => {
         console.log("Error while signing out", err);

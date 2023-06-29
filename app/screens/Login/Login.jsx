@@ -28,7 +28,7 @@ const Login = ({ navigation }) => {
     if (authenticated) {
       setEmail("");
       setPassword("");
-      navigation.navigate("OTP");
+      navigation.navigate("Main");
     }
   }, [authenticated]);
 

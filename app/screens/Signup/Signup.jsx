@@ -23,13 +23,14 @@ const Signup = ({ navigation }) => {
       return;
     }
     signup(email, password);
+    // navigation.navigate("StudentProfileSetting", { id: 0 });
   };
 
   useEffect(() => {
     if (authenticated) {
       setEmail("");
       setPassword("");
-      navigation.navigate("OTP");
+      navigation.navigate("StudentProfileSetting", { id: 0 });
     }
   }, [authenticated]);
 
