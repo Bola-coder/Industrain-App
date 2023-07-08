@@ -3,7 +3,7 @@ import React from "react";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
-const ScreenHeader = ({ title, shouldSkip, onSkipPress }) => {
+const ScreenHeader = ({ title }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
@@ -14,7 +14,7 @@ const ScreenHeader = ({ title, shouldSkip, onSkipPress }) => {
       >
         <FontAwesomeIcon name="angle-left" size={20} color={"#FFF"} />
       </TouchableOpacity>
-      <Text style={styles.headerText}>Complete Profile</Text>
+      <Text style={styles.headerText}>{title}</Text>
     </View>
   );
 };

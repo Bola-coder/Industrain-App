@@ -15,28 +15,29 @@ import JoinUs from "./../screens/JoinUs/JoinUs";
 import StudentProfileSetting from "./../screens/StudentProfileSetting/StudentProfileSetting";
 import TabContainer from "./TabContainer";
 import SearchScreen from "./../screens/Search/SearchScreen";
+import CategoryScreen from "./../screens/Category/CategoryScreen";
 
 const AppContent = () => {
   const Stack = createNativeStackNavigator();
   const { user, setUser } = useAuth();
-  const [initialRouteName, setInitialRouteName] = useState("Onboarding");
+  const [initialRouteName, setInitialRouteName] = useState("Main");
   useEffect(() => {
     const getLoggedInUser = async () => {
       try {
         const res = await AsyncStorage.getData("@userData");
-        setUser(JSON.parse(res));
+        if (res) {
+          setUser(JSON.parse(res));
+        }
       } catch (err) {
         console.log(err);
       }
+      if (user) {
+        setInitialRouteName("Main");
+      } else {
+        setInitialRouteName("Onboarding");
+      }
     };
     getLoggedInUser();
-  }, []);
-
-  useEffect(() => {
-    // console.log(user);
-    if (user) {
-      setInitialRouteName("Main");
-    }
   }, [user]);
 
   return (
@@ -107,6 +108,12 @@ const AppContent = () => {
           component={SearchScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Category"
+          component={CategoryScreen}
+          options={{ headerShown: false }}
+        />
+
         {/* Main Tab Screens */}
         <Stack.Screen
           name="Main"

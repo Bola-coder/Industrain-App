@@ -4,13 +4,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthProvider from "./app/context/AuthContext";
 import UserProvider from "./app/context/UserContext";
 import AppContent from "./app/components/AppContent";
+import JobProvider from "./app/context/JobContext";
 
 export default function App() {
   return (
     <NavigationContainer>
       <AuthProvider>
         <UserProvider>
-          <AppContent />
+          <JobProvider>
+            <AppContent />
+          </JobProvider>
         </UserProvider>
       </AuthProvider>
     </NavigationContainer>

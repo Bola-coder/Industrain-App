@@ -1,0 +1,5 @@
+main: #1B4A58
+secondary: #BCD195
+lightGray: #E3E9EC
+darkGray: #828282
+textBold: #4F4F4F

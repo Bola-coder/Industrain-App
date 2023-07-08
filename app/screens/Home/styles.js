@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
 
   componentHeaderLinkText: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: 500,
     color: "#BCD195",
   },

@@ -47,7 +47,6 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     const email = user?.email;
     const uid = user?.uid;
-    console.log(email, uid);
     setUserDetails((prev) => {
       return { ...prev, ...{ email, uid } };
     });
@@ -67,11 +66,27 @@ const UserProvider = ({ children }) => {
   };
 
   //   Function to get userDetails from firebase and save to AsyncStorage
-  const getUserDetails = async () => {
+  const getUserDetails = async (email) => {
     try {
       const details = await AsyncStorage.getObjectData("@userDetails");
-      setUserDetails(details);
-      console.log("User data gotten!!!");
+      if (details) {
+        setUserDetails(details);
+        console.log("User data gotten!!!");
+      } else {
+        const userQuery = query(colRef, where("email", "==", email));
+        const querySnapshot = await getDocs(userQuery);
+        const userDoc = querySnapshot.docs[0];
+        const userDocRef = doc(colRef, userDoc.id);
+        getDoc(userDocRef)
+          .then((doc) => {
+            console.log("The user data is....", doc.data());
+            setUserDetails(doc.data());
+            updateUserDetails(doc.data());
+          })
+          .catch((err) => {
+            console.log("Error", err);
+          });
+      }
     } catch (err) {
       console.log("Error while fetching user details");
     }
@@ -88,7 +103,6 @@ const UserProvider = ({ children }) => {
 
     const userDoc = querySnapshot.docs[0]; // Assuming there is only one matching user document
     const userDocRef = doc(colRef, userDoc.id);
-    console.log(userQuery);
 
     try {
       const userSnapShot = await updateDoc(userDocRef, {
@@ -110,11 +124,35 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const clearUserDetails = async () => {
+    setUserDetails({
+      email: "",
+      uid: "",
+      name: "",
+      phone: "",
+      gender: "",
+      address: "",
+      dob: "",
+      school: "",
+      degree: "",
+      course: "",
+      level: "",
+      passingYear: "",
+    });
+    try {
+      await AsyncStorage.deleteDataFromStorage("@userDetails");
+      console.log("Cleared user details from storage already");
+    } catch (err) {
+      console.log("Errro clearing user details from storage", err);
+    }
+  };
+
   const values = {
     updateUserDetails,
     userDetails,
     getUserDetails,
     saveUserDetailsToDB,
+    clearUserDetails,
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

@@ -62,7 +62,7 @@ const SearchScreen = () => {
   ];
   return (
     <View style={styles.search}>
-      <ScreenHeader />
+      <ScreenHeader title={"Search"} />
       <View style={styles.searchInputContainer}>
         <SearchComponent
           imageSource={require("./../../../assets/Filter.png")}

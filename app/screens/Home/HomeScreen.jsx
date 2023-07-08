@@ -8,9 +8,12 @@ import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
+
+// HomeScreen
 const HomeScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
-  const { userDetails, getUserDetails } = useUserContext();
+  const { userDetails, clearUserDetails, getUserDetails } = useUserContext();
+
   const categories = [
     {
       img: require("./../../../assets/scienceIcon.png"),
@@ -70,8 +73,8 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   useEffect(() => {
-    getUserDetails();
-  }, []);
+    getUserDetails(user?.email);
+  }, [user]);
 
   // HandleSearch function
   const handleSearch = () => {
@@ -80,11 +83,13 @@ const HomeScreen = ({ navigation }) => {
 
   const handleLogout = async () => {
     await logout();
+    clearUserDetails();
     Alert.alert("Signout successful");
     navigation.navigate("Login");
   };
   return (
     <ScrollView style={styles.home}>
+      {/* Header */}
       <View style={styles.homeHeader}>
         <View style={styles.homeHeaderText}>
           <Text style={styles.homeHeaderTextMain}>Hello 👋</Text>
@@ -92,9 +97,13 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <Image source={require("./../../../assets/Notification.png")} />
       </View>
+
+      {/* Input */}
       <View style={styles.inputContainer}>
         <SearchComponent useIcon={true} onIconPress={handleSearch} />
       </View>
+
+      {/* CTA */}
       <View style={styles.homeCTA}>
         <View style={styles.homeCTAContent}>
           <Text style={styles.homeCTAText}>
@@ -110,10 +119,16 @@ const HomeScreen = ({ navigation }) => {
           <Image source={require("./../../../assets/studentImage.png")} />
         </View>
       </View>
+
+      {/* Categories */}
       <View style={styles.category}>
         <View style={styles.componentHeader}>
           <Text style={styles.componentHeaderText}>Categories</Text>
-          <TouchableOpacity style={styles.componentHeaderLink}>
+          <TouchableOpacity
+            style={styles.componentHeaderLink}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("Category")}
+          >
             <Text style={styles.componentHeaderLinkText}>See all</Text>
           </TouchableOpacity>
         </View>
@@ -125,10 +140,15 @@ const HomeScreen = ({ navigation }) => {
           ))}
         </ScrollView>
       </View>
+
+      {/* Companies */}
       <View style={styles.company}>
         <View style={styles.componentHeader}>
           <Text style={styles.componentHeaderText}>Top Companies</Text>
-          <TouchableOpacity style={styles.componentHeaderLink}>
+          <TouchableOpacity
+            style={styles.componentHeaderLink}
+            activeOpacity={0.7}
+          >
             <Text style={styles.componentHeaderLinkText}>See all</Text>
           </TouchableOpacity>
         </View>
