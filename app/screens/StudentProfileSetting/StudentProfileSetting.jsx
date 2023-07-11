@@ -5,7 +5,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import StepIndicator from "react-native-step-indicator";
@@ -34,6 +34,25 @@ const StudentProfileSetting = ({ navigation, route }) => {
   const [passingYear, setPassingYear] = useState("");
   const { id } = route.params;
 
+  const handleSave = async () => {
+    if (id === 0) {
+      const fieldOne = { name, phone, gender, address, dob };
+      await updateUserDetails(fieldOne);
+      navigation.navigate("StudentProfileSettingTwo", { id: 1 });
+    } else if (id === 1) {
+      const fieldTwo = { school, degree, course, level, passingYear };
+      await updateUserDetails(fieldTwo);
+      navigation.navigate("StudentProfileSettingThree", { id: 2 });
+      // console.log(userDetails);
+    } else {
+      // console.log({ ...userDetails });
+      const fields = { ...userDetails };
+      console.log("Email I am saving to", userDetails?.email);
+      saveUserDetailsToDB(userDetails?.email, fields);
+      navigation.navigate("Main", { id: 2 });
+    }
+  };
+
   // Custom styles for the step indicator
   const customStyles = {
     stepIndicatorSize: 25,
@@ -57,24 +76,6 @@ const StudentProfileSetting = ({ navigation, route }) => {
     labelColor: "#999999",
     labelSize: 13,
     currentStepLabelColor: "#1B4A58",
-  };
-
-  const handleSave = async () => {
-    if (id === 0) {
-      const fieldOne = { name, phone, gender, address, dob };
-      await updateUserDetails(fieldOne);
-      navigation.navigate("StudentProfileSettingTwo", { id: 1 });
-    } else if (id === 1) {
-      const fieldTwo = { school, degree, course, level, passingYear };
-      await updateUserDetails(fieldTwo);
-      navigation.navigate("StudentProfileSettingThree", { id: 2 });
-      // console.log(userDetails);
-    } else {
-      // console.log({ ...userDetails });
-      const fields = { ...userDetails };
-      saveUserDetailsToDB(user?.email, fields);
-      navigation.navigate("Main", { id: 2 });
-    }
   };
 
   return (

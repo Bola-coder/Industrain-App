@@ -16,29 +16,32 @@ import StudentProfileSetting from "./../screens/StudentProfileSetting/StudentPro
 import TabContainer from "./TabContainer";
 import SearchScreen from "./../screens/Search/SearchScreen";
 import CategoryScreen from "./../screens/Category/CategoryScreen";
+import CompanyScreen from "../screens/Company/CompanyScreen";
 
 const AppContent = () => {
   const Stack = createNativeStackNavigator();
   const { user, setUser } = useAuth();
   const [initialRouteName, setInitialRouteName] = useState("Main");
+  const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     const getLoggedInUser = async () => {
       try {
         const res = await AsyncStorage.getData("@userData");
-        if (res) {
+        console.log(res);
+        if (res !== null && res !== undefined && res !== "") {
+          setLoggedIn(true);
           setUser(JSON.parse(res));
+          setInitialRouteName("Main");
+        } else {
+          setInitialRouteName("Onboarding");
         }
       } catch (err) {
         console.log(err);
       }
-      if (user) {
-        setInitialRouteName("Main");
-      } else {
-        setInitialRouteName("Onboarding");
-      }
+      console.log(loggedIn);
     };
     getLoggedInUser();
-  }, [user]);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -111,6 +114,11 @@ const AppContent = () => {
         <Stack.Screen
           name="Category"
           component={CategoryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Company"
+          component={CompanyScreen}
           options={{ headerShown: false }}
         />
 

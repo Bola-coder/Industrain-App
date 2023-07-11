@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
     const unsuscribe = onAuthStateChanged(auth, (currUser) => {
       if (currUser) {
         setAuthenticated(true);
+        // console.log(currUser);
         getUserDataFromDB(currUser);
       } else {
         return;
@@ -124,10 +125,12 @@ const AuthProvider = ({ children }) => {
   const signup = async (email, password) => {
     setAuthLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
+      .then(async (userCredentials) => {
         let uid = userCredentials?.user.uid;
         let curuser = { email, uid };
         saveUserToDB(curuser);
+        await AsyncStorage.storeData("@userData", { email, password });
+        // The user email amd password is saved to localStotage immediately after signup
       })
       .catch((err) => {
         console.log("An error occured during sign up", err);

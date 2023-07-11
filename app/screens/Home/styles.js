@@ -2,9 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   home: {
-    flex: 1,
     paddingHorizontal: 10,
-    height: "100%",
     backgroundColor: "#FFF",
   },
 
@@ -96,6 +94,7 @@ const styles = StyleSheet.create({
 
   componentHeaderLinkText: {
     fontSize: 18,
+    fontWeight: 600,
     fontWeight: 500,
     color: "#BCD195",
   },

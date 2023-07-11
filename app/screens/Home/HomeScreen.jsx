@@ -11,8 +11,8 @@ import { useUserContext } from "../../context/UserContext";
 
 // HomeScreen
 const HomeScreen = ({ navigation }) => {
-  const { user, logout } = useAuth();
-  const { userDetails, clearUserDetails, getUserDetails } = useUserContext();
+  const { user } = useAuth();
+  const { userDetails, getUserDetails } = useUserContext();
 
   const categories = [
     {
@@ -81,19 +81,18 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("Search");
   };
 
-  const handleLogout = async () => {
-    await logout();
-    clearUserDetails();
-    Alert.alert("Signout successful");
-    navigation.navigate("Login");
-  };
   return (
-    <ScrollView style={styles.home}>
+    <ScrollView
+      contentContainerStyle={styles.home}
+      showsVerticalScrollIndicator={false}
+    >
       {/* Header */}
       <View style={styles.homeHeader}>
         <View style={styles.homeHeaderText}>
           <Text style={styles.homeHeaderTextMain}>Hello 👋</Text>
-          <Text style={styles.homeHeaderTextInner}>{userDetails?.name}</Text>
+          <Text style={styles.homeHeaderTextInner}>
+            {userDetails?.name || "User"}
+          </Text>
         </View>
         <Image source={require("./../../../assets/Notification.png")} />
       </View>
@@ -110,9 +109,7 @@ const HomeScreen = ({ navigation }) => {
             Find companies you want for Industrial Training
           </Text>
           <TouchableOpacity style={styles.homeCTABtn} activeOpacity={0.7}>
-            <Text style={styles.homeCTABtnText} onPress={handleLogout}>
-              Explore
-            </Text>
+            <Text style={styles.homeCTABtnText}>Explore</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.homeCTAImageContainer}>
@@ -148,26 +145,11 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.componentHeaderLink}
             activeOpacity={0.7}
+            onPress={() => navigation.navigate("Company")}
           >
             <Text style={styles.componentHeaderLinkText}>See all</Text>
           </TouchableOpacity>
         </View>
-        {/* <FlatList
-          data={topCompanies}
-          renderItem={({ item }) => (
-            <CompanyCard
-              img={item.img}
-              name={item.name}
-              location={item.location}
-              duration={item.duration}
-              role={item.role}
-            />
-          )}
-          contentContainerStyle={{
-            paddingTop: 20,
-          }}
-          keyExtractor={(item) => item.id}
-        /> */}
         {topCompanies.map((item) => (
           <View key={item.id}>
             <CompanyCard

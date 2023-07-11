@@ -5,13 +5,16 @@ import styles from "./style";
 import AuthButton from "../../components/AuthButton";
 import ErrorModal from "./../../components/ErrorModal";
 import { useAuth } from "./../../context/AuthContext";
+import { useUserContext } from "../../context/UserContext";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [showError, setShowError] = useState(false);
-  const { login, authLoading, authenticated, error, setError } = useAuth();
+  const { login, authLoading, authenticated, error, setError, user } =
+    useAuth();
+  const { getUserDetails } = useUserContext();
 
   const handleHidePassword = () => {
     setHidePassword((prev) => !prev);
@@ -28,6 +31,7 @@ const Login = ({ navigation }) => {
     if (authenticated) {
       setEmail("");
       setPassword("");
+      getUserDetails(user?.email);
       navigation.navigate("Main");
     }
   }, [authenticated]);

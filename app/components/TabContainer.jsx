@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IonIcons from "@expo/vector-icons/Ionicons";
 import HomeScreen from "../screens/Home/HomeScreen";
+import AccountScreen from "../screens/Account/AccountScreen";
 
 const Tab = createBottomTabNavigator();
 const TabContainer = () => {
@@ -72,7 +73,7 @@ const TabContainer = () => {
       />
       <Tab.Screen
         name="Account"
-        component={HomeScreen}
+        component={AccountScreen}
         options={{
           headerShown: false,
           tabBarLabel: "Account",

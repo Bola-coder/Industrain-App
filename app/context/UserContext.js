@@ -79,7 +79,7 @@ const UserProvider = ({ children }) => {
         const userDocRef = doc(colRef, userDoc.id);
         getDoc(userDocRef)
           .then((doc) => {
-            console.log("The user data is....", doc.data());
+            // console.log("The user data is....", doc.data());
             setUserDetails(doc.data());
             updateUserDetails(doc.data());
           })
@@ -88,7 +88,7 @@ const UserProvider = ({ children }) => {
           });
       }
     } catch (err) {
-      console.log("Error while fetching user details");
+      console.log("Error while fetching user details", err);
     }
   };
 
