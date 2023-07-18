@@ -14,7 +14,6 @@ const Login = ({ navigation }) => {
   const [showError, setShowError] = useState(false);
   const { login, authLoading, authenticated, error, setError, user } =
     useAuth();
-  const { getUserDetails } = useUserContext();
 
   const handleHidePassword = () => {
     setHidePassword((prev) => !prev);
@@ -31,7 +30,7 @@ const Login = ({ navigation }) => {
     if (authenticated) {
       setEmail("");
       setPassword("");
-      getUserDetails(user?.email);
+      // getUserDetails(user?.email);
       navigation.navigate("Main");
     }
   }, [authenticated]);

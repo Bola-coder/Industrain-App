@@ -8,6 +8,7 @@ import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
+import { useQuery } from "react-query";
 
 // HomeScreen
 const HomeScreen = ({ navigation }) => {
@@ -72,10 +73,24 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
 
-  useEffect(() => {
-    getUserDetails(user?.email);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user?.email);
+  //   getUserDetails(user?.email);
+  //   console.log("Details in Home: ", userDetails);
+  // }, [user]);
 
+  const userDetailsQuery = useQuery({
+    queryKey: ["userDetails"],
+    queryFn: () => getUserDetails(user?.email),
+    enabled: !!user,
+  });
+
+  if (userDetailsQuery.isError) {
+    console.log("Error occured in Home User Query");
+  }
+  if (userDetailsQuery.isSuccess) {
+    console.log("Query Data gotten from Home", userDetailsQuery.data);
+  }
   // HandleSearch function
   const handleSearch = () => {
     navigation.navigate("Search");

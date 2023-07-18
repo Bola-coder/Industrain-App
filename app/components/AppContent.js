@@ -1,8 +1,6 @@
 import { SafeAreaView, StyleSheet, Platform, StatusBar } from "react-native";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AsyncStorage from "../utils/AsyncStorage";
-import { useAuth } from "../context/AuthContext";
 import Onboarding from "./../screens/Onboarding/Onboarding";
 import OnboardingTwo from "./../screens/Onboarding/OnboardingTwo";
 import OnboardingThree from "./../screens/Onboarding/OnboardingThree";
@@ -17,35 +15,19 @@ import TabContainer from "./TabContainer";
 import SearchScreen from "./../screens/Search/SearchScreen";
 import CategoryScreen from "./../screens/Category/CategoryScreen";
 import CompanyScreen from "../screens/Company/CompanyScreen";
+import PersonalInformationScreen from "../screens/PersonalInformation/PersonalInformationScreen";
+import SplashScreen from "../screens/Spalsh/SplashScreen";
 
 const AppContent = () => {
   const Stack = createNativeStackNavigator();
-  const { user, setUser } = useAuth();
-  const [initialRouteName, setInitialRouteName] = useState("Main");
-  const [loggedIn, setLoggedIn] = useState(false);
-  useEffect(() => {
-    const getLoggedInUser = async () => {
-      try {
-        const res = await AsyncStorage.getData("@userData");
-        console.log(res);
-        if (res !== null && res !== undefined && res !== "") {
-          setLoggedIn(true);
-          setUser(JSON.parse(res));
-          setInitialRouteName("Main");
-        } else {
-          setInitialRouteName("Onboarding");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-      console.log(loggedIn);
-    };
-    getLoggedInUser();
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Navigator initialRouteName={initialRouteName}>
+      <Stack.Navigator initialRouteName={"SplashScreen"}>
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
@@ -119,6 +101,11 @@ const AppContent = () => {
         <Stack.Screen
           name="Company"
           component={CompanyScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PersonalInformation"
+          component={PersonalInformationScreen}
           options={{ headerShown: false }}
         />
 

@@ -17,13 +17,12 @@ const Signup = ({ navigation }) => {
   const handleHidePassword = () => {
     setHidePassword((prev) => !prev);
   };
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!email || !password) {
       setError("Please provide email and password");
       return;
     }
-    signup(email, password);
-    // navigation.navigate("StudentProfileSetting", { id: 0 });
+    await signup(email, password);
   };
 
   useEffect(() => {

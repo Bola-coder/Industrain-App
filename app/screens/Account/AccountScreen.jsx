@@ -63,7 +63,11 @@ const AccountScreen = ({ navigation }) => {
 
       {/*  Account Settings*/}
       <View style={styles.accountSettingContainer}>
-        <TouchableOpacity style={styles.accountSetting} activeOpacity={0.6}>
+        <TouchableOpacity
+          style={styles.accountSetting}
+          activeOpacity={0.6}
+          onPress={() => navigation.navigate("PersonalInformation")}
+        >
           <IonIcon name="person" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>Personal Information</Text>
         </TouchableOpacity>

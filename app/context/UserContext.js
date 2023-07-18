@@ -71,7 +71,6 @@ const UserProvider = ({ children }) => {
       const details = await AsyncStorage.getObjectData("@userDetails");
       if (details) {
         setUserDetails(details);
-        console.log("User data gotten!!!");
       } else {
         const userQuery = query(colRef, where("email", "==", email));
         const querySnapshot = await getDocs(userQuery);
@@ -82,6 +81,7 @@ const UserProvider = ({ children }) => {
             // console.log("The user data is....", doc.data());
             setUserDetails(doc.data());
             updateUserDetails(doc.data());
+            // console.log("User details updated from db");
           })
           .catch((err) => {
             console.log("Error", err);
@@ -97,7 +97,7 @@ const UserProvider = ({ children }) => {
     const userQuery = query(colRef, where("email", "==", email));
     const querySnapshot = await getDocs(userQuery);
     if (querySnapshot.empty) {
-      console.log("User document not found");
+      // console.log("User document not found");
       return;
     }
 
@@ -105,7 +105,7 @@ const UserProvider = ({ children }) => {
     const userDocRef = doc(colRef, userDoc.id);
 
     try {
-      const userSnapShot = await updateDoc(userDocRef, {
+      await updateDoc(userDocRef, {
         name: fields.name,
         phone: fields.phone,
         gender: fields.gender,
@@ -118,7 +118,6 @@ const UserProvider = ({ children }) => {
         passingYear: fields.passingYear,
       });
       console.log("Done updating firestore");
-      //   await AsyncStorage.deleteDataFromStorage("@userDetails")
     } catch (err) {
       console.log("Error when updating user details", err);
     }
@@ -141,7 +140,8 @@ const UserProvider = ({ children }) => {
     });
     try {
       await AsyncStorage.deleteDataFromStorage("@userDetails");
-      console.log("Cleared user details from storage already");
+      console.log("Cleared user details from storage");
+      setUserDetails(null);
     } catch (err) {
       console.log("Errro clearing user details from storage", err);
     }

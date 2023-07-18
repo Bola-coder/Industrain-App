@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import AsyncStorage from "../utils/AsyncStorage";
+import { useQuery } from "react-query";
 
 const AuthContext = createContext();
 
@@ -20,20 +21,28 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [authLoading, setAuthLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [finished, setFinished] = useState(false);
   const colRef = collection(db, "users");
 
   useEffect(() => {
     const unsuscribe = onAuthStateChanged(auth, (currUser) => {
       if (currUser) {
         setAuthenticated(true);
-        // console.log(currUser);
-        getUserDataFromDB(currUser);
+        setUser(currUser);
+        // getUserDataFromDB(currUser.email);
       } else {
         return;
       }
     });
     return () => unsuscribe;
   }, []);
+
+  // useQueryHook to get the user from the database once the saveToDb function has successfuly finished
+  useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserDataFromDB(user?.email),
+    enabled: finished,
+  });
 
   // Firebase Error handling
   const handleFirebaseAuthErrors = (err) => {
@@ -88,14 +97,12 @@ const AuthProvider = ({ children }) => {
           })
             .then(() => {
               console.log("User profile created successfully");
+              setFinished(true);
             })
             .catch((err) => {
               console.log("Error when creating user profile", err);
             });
         }
-        // else {
-        //   console.log(`User with email ${user.email} already exist`);
-        // }
       })
       .catch((err) => {
         console.log("Error when getting users from db", err);
@@ -103,18 +110,16 @@ const AuthProvider = ({ children }) => {
   };
 
   // Get user's data from Firestore, and them save the user to the users state and asyncStorage
-  const getUserDataFromDB = (user) => {
+  const getUserDataFromDB = (email) => {
     let activeUser;
     getDocs(colRef)
       .then((snapshot) => {
         activeUser = snapshot.docs.find((doc) => {
-          return doc.data().email === user.email;
+          return doc.data().email === email;
         });
       })
       .then(async () => {
         setUser(activeUser.data());
-        //Set the user to the phone async storage
-        // console.log(activeUser.data());
         await AsyncStorage.storeData("@userData", activeUser.data());
       })
       .catch((err) => {
@@ -130,7 +135,6 @@ const AuthProvider = ({ children }) => {
         let curuser = { email, uid };
         saveUserToDB(curuser);
         await AsyncStorage.storeData("@userData", { email, password });
-        // The user email amd password is saved to localStotage immediately after signup
       })
       .catch((err) => {
         console.log("An error occured during sign up", err);
@@ -144,8 +148,10 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setAuthLoading(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        // DO nothing
+      .then(async (userCredentials) => {
+        setFinished(true);
+        await AsyncStorage.storeData("@userData", { email, password });
+        // getUserDataFromDB(email);
       })
       .catch((err) => {
         console.log("An error occured during log in", err.message);

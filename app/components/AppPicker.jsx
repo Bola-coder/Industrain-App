@@ -2,8 +2,14 @@ import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 
-const AppPicker = ({ items, bgColor, prompt, onPickerValueChange }) => {
-  const [selectedItem, setSelectedItem] = useState();
+const AppPicker = ({
+  items,
+  bgColor,
+  prompt,
+  defaultValue,
+  onPickerValueChange,
+}) => {
+  const [selectedItem, setSelectedItem] = useState(defaultValue);
 
   // useEffect(() => {
   //   onPickerValueChange(items[0].value);
@@ -33,9 +39,7 @@ const AppPicker = ({ items, bgColor, prompt, onPickerValueChange }) => {
       <Picker.Item label={prompt} value={null} key={-1} />
       {/* Title/label item */}
       {items.map((item, index) => (
-        // <View key={index}>
         <Picker.Item label={item.label} value={item.value} key={index} />
-        // </View>
       ))}
     </Picker>
   );

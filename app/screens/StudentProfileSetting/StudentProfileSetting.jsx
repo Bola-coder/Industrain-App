@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styles from "./style";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import StepIndicator from "react-native-step-indicator";
@@ -15,13 +16,11 @@ import AppPicker from "../../components/AppPicker";
 import AppDatePicker from "../../components/AppDatePicker";
 
 const StudentProfileSetting = ({ navigation, route }) => {
-  const {
-    userDetails,
-    updateUserDetails,
-    getUserDetails,
-    saveUserDetailsToDB,
-  } = useUserContext();
+  const { userDetails, updateUserDetails, saveUserDetailsToDB } =
+    useUserContext();
   const { user } = useAuth();
+
+  // Local states
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
@@ -47,9 +46,9 @@ const StudentProfileSetting = ({ navigation, route }) => {
     } else {
       // console.log({ ...userDetails });
       const fields = { ...userDetails };
-      console.log("Email I am saving to", userDetails?.email);
-      saveUserDetailsToDB(userDetails?.email, fields);
-      navigation.navigate("Main", { id: 2 });
+      console.log("Email I am saving to", user?.email);
+      saveUserDetailsToDB(user?.email, fields);
+      navigation.navigate("Main");
     }
   };
 
