@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IonIcons from "@expo/vector-icons/Ionicons";
 import HomeScreen from "../screens/Home/HomeScreen";
 import AccountScreen from "../screens/Account/AccountScreen";
-import ProposalScreen from "../screens/Proposals/ProposalScreen";
+import ProposalScreen from "../screens/Proposals/AppliedProposal";
 import ChatScreen from "../screens/Chats/ChatScreen";
+import ProposalNavigation from "./ProposalNavigation";
 
 const Tab = createBottomTabNavigator();
 const TabContainer = () => {
@@ -59,7 +60,7 @@ const TabContainer = () => {
       />
       <Tab.Screen
         name="Proposals"
-        component={ProposalScreen}
+        component={ProposalNavigation}
         options={{
           headerShown: false,
           tabBarLabel: "Proposals",

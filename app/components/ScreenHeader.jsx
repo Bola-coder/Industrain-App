@@ -3,18 +3,24 @@ import React from "react";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
-const ScreenHeader = ({ title }) => {
+const ScreenHeader = ({ title, darkMode }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
       <TouchableOpacity
-        style={styles.backIcon}
+        style={[styles.backIcon, darkMode && darkStyle.backIcon]}
         activeOpacity={0.7}
         onPress={() => navigation.goBack()}
       >
-        <FontAwesomeIcon name="angle-left" size={20} color={"#FFF"} />
+        <FontAwesomeIcon
+          name="angle-left"
+          size={24}
+          color={darkMode ? "#1B5A58" : "#FFF"}
+        />
       </TouchableOpacity>
-      <Text style={styles.headerText}>{title}</Text>
+      <Text style={[styles.headerText, darkMode && darkStyle.darkHeaderText]}>
+        {title}
+      </Text>
     </View>
   );
 };
@@ -49,4 +55,14 @@ const styles = StyleSheet.create({
   //   skipText: {
   //     fontSize: 20,
   //   },
+});
+
+const darkStyle = StyleSheet.create({
+  backIcon: {
+    backgroundColor: "#FFF",
+  },
+
+  darkHeaderText: {
+    color: "#fff",
+  },
 });

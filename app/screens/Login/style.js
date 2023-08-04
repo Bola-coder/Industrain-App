@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   login: {
     padding: 20,
+    backgroundColor: "#fff",
+    height: "100%",
   },
 
   loginHeader: {

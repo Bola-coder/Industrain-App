@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     padding: 20,
+    backgroundColor: "#fff",
   },
 
   skipTextContainer: {
