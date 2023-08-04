@@ -5,9 +5,14 @@ import styles from "./style";
 const Onboarding = ({ navigation }) => {
   return (
     <View style={styles.onboarding} onPress={() => console.log("hey")}>
-      <TouchableOpacity>
-        <Text style={styles.skipText}>Skip</Text>
-      </TouchableOpacity>
+      <View style={styles.skipTextContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Login")}
+          style={styles.skipTextButton}
+        >
+          <Text style={styles.skipText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.onboardingImageContainer}>
         <Image
           source={require("./../../../assets/woman.png")}

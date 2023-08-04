@@ -66,26 +66,53 @@ const UserProvider = ({ children }) => {
   };
 
   //   Function to get userDetails from firebase and save to AsyncStorage
+  // const getUserDetails = async (email) => {
+  //   try {
+  //     const details = await AsyncStorage.getObjectData("@userDetails");
+  //     if (details) {
+  //       console.log("Omooo", details);
+  //       setUserDetails(details);
+  //     } else {
+  //       const userQuery = query(colRef, where("email", "==", email));
+  //       const querySnapshot = await getDocs(userQuery);
+  //       const userDoc = querySnapshot.docs[0];
+  //       const userDocRef = doc(colRef, userDoc.id);
+  //       getDoc(userDocRef)
+  //         .then((doc) => {
+  //           // console.log("The user data is....", doc.data());
+  //           setUserDetails(doc.data());
+  //           updateUserDetails(doc.data());
+  //           console.log("Donee");
+  //           // console.log("User details updated from db");
+  //         })
+  //         .catch((err) => {
+  //           console.log("Error", err);
+  //         });
+  //     }
+  //   } catch (err) {
+  //     console.log("Error while fetching user details", err);
+  //   }
+  // };
+
+  //   Function to get userDetails from firebase and save to AsyncStorage
   const getUserDetails = async (email) => {
     try {
       const details = await AsyncStorage.getObjectData("@userDetails");
       if (details) {
+        console.log("User details fetched from AsyncStorage", details);
         setUserDetails(details);
       } else {
         const userQuery = query(colRef, where("email", "==", email));
         const querySnapshot = await getDocs(userQuery);
-        const userDoc = querySnapshot.docs[0];
-        const userDocRef = doc(colRef, userDoc.id);
-        getDoc(userDocRef)
-          .then((doc) => {
-            // console.log("The user data is....", doc.data());
-            setUserDetails(doc.data());
-            updateUserDetails(doc.data());
-            // console.log("User details updated from db");
-          })
-          .catch((err) => {
-            console.log("Error", err);
-          });
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          const userDocRef = doc(colRef, userDoc.id);
+          const doc = await getDoc(userDocRef);
+          const userData = doc.data();
+          setUserDetails(userData);
+          updateUserDetails(userData);
+          console.log("User details fetched from Firestore", userData);
+        }
       }
     } catch (err) {
       console.log("Error while fetching user details", err);
@@ -124,20 +151,7 @@ const UserProvider = ({ children }) => {
   };
 
   const clearUserDetails = async () => {
-    setUserDetails({
-      email: "",
-      uid: "",
-      name: "",
-      phone: "",
-      gender: "",
-      address: "",
-      dob: "",
-      school: "",
-      degree: "",
-      course: "",
-      level: "",
-      passingYear: "",
-    });
+    setUserDetails(null);
     try {
       await AsyncStorage.deleteDataFromStorage("@userDetails");
       console.log("Cleared user details from storage");

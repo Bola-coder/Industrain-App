@@ -1,4 +1,6 @@
-import { SafeAreaView, StyleSheet, Platform, StatusBar } from "react-native";
+import { SafeAreaView, StyleSheet, Platform } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import Constants from "expo-constants";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Onboarding from "./../screens/Onboarding/Onboarding";
@@ -11,12 +13,13 @@ import CreateNewPassword from "./../screens/CreateNewPassword/CreateNewPassword"
 import OTPScreen from "./../screens/OTP/OTPScreen";
 import JoinUs from "./../screens/JoinUs/JoinUs";
 import StudentProfileSetting from "./../screens/StudentProfileSetting/StudentProfileSetting";
-import TabContainer from "./TabContainer";
+import TabContainer from "../Navigation/TabContainer";
 import SearchScreen from "./../screens/Search/SearchScreen";
 import CategoryScreen from "./../screens/Category/CategoryScreen";
 import CompanyScreen from "../screens/Company/CompanyScreen";
 import PersonalInformationScreen from "../screens/PersonalInformation/PersonalInformationScreen";
 import SplashScreen from "../screens/Spalsh/SplashScreen";
+import EducationalInformationUpdate from "./../screens/EducationalInformation/EducationalInformationUpdateScreen";
 
 const AppContent = () => {
   const Stack = createNativeStackNavigator();
@@ -108,6 +111,11 @@ const AppContent = () => {
           component={PersonalInformationScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="EducationalInformation"
+          component={EducationalInformationUpdate}
+          options={{ headerShown: false }}
+        />
 
         {/* Main Tab Screens */}
         <Stack.Screen
@@ -116,6 +124,7 @@ const AppContent = () => {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
+      <StatusBar style="dark" backgroundColor="#FFF" />
     </SafeAreaView>
   );
 };
@@ -126,6 +135,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    // paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
   },
 });

@@ -6,17 +6,20 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome";
 import IonIcon from "@expo/vector-icons/Ionicons";
 import styles from "./style";
 import ScreenHeader from "../../components/ScreenHeader";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
+import ConfirmationModal from "../../components/confirmationModal";
 
 const AccountScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
   const { userDetails, clearUserDetails, getUserDetails } = useUserContext();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   const handleLogout = async () => {
     await logout();
     clearUserDetails();
@@ -51,11 +54,11 @@ const AccountScreen = ({ navigation }) => {
 
       {/* Profile Details */}
       <View style={styles.profileDetails}>
-        <Text style={styles.profileName}>Bolarinwa Ahmed</Text>
-        <Text style={styles.profileRole}>Computer Science</Text>
+        <Text style={styles.profileName}>{userDetails.name}</Text>
+        <Text style={styles.profileRole}>{userDetails.course}</Text>
         <View style={styles.location}>
           <IonIcon name="location-outline" size={24} />
-          <Text style={styles.profileLocation}>Ifo, Ogun State</Text>
+          <Text style={styles.profileLocation}>{userDetails.address}</Text>
         </View>
       </View>
       {/* End of Profile Details */}
@@ -71,7 +74,11 @@ const AccountScreen = ({ navigation }) => {
           <IonIcon name="person" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>Personal Information</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.accountSetting} activeOpacity={0.6}>
+        <TouchableOpacity
+          style={styles.accountSetting}
+          activeOpacity={0.6}
+          onPress={() => navigation.navigate("EducationalInformation")}
+        >
           <IonIcon name="school" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>School Information</Text>
         </TouchableOpacity>
@@ -86,11 +93,23 @@ const AccountScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.accountSetting}
           activeOpacity={0.6}
-          onPress={handleLogout}
+          onPress={() => {
+            setShowLogoutModal(true);
+          }}
         >
           <IonIcon name="log-out" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>Logout</Text>
         </TouchableOpacity>
+
+        {/* Modal to show when user clicks on the logout button above */}
+        <ConfirmationModal
+          visible={showLogoutModal}
+          messsage={"Are you sure you want to log out?"}
+          handleClose={() => {
+            setShowLogoutModal(false);
+          }}
+          handleConfirmation={handleLogout}
+        />
       </View>
       {/* End of Account Settings */}
     </ScrollView>

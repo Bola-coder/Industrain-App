@@ -73,16 +73,15 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
 
-  // useEffect(() => {
-  //   console.log(user?.email);
-  //   getUserDetails(user?.email);
-  //   console.log("Details in Home: ", userDetails);
-  // }, [user]);
+  useEffect(() => {
+    getUserDetails(user?.email); // Fetch user details after the component mounts
+  }, [user?.email]);
 
   const userDetailsQuery = useQuery({
     queryKey: ["userDetails"],
     queryFn: () => getUserDetails(user?.email),
     enabled: !!user,
+    staleTime: 0,
   });
 
   if (userDetailsQuery.isError) {
@@ -90,6 +89,7 @@ const HomeScreen = ({ navigation }) => {
   }
   if (userDetailsQuery.isSuccess) {
     console.log("Query Data gotten from Home", userDetailsQuery.data);
+    console.log(userDetails);
   }
   // HandleSearch function
   const handleSearch = () => {

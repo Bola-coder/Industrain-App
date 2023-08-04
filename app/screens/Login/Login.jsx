@@ -14,6 +14,7 @@ const Login = ({ navigation }) => {
   const [showError, setShowError] = useState(false);
   const { login, authLoading, authenticated, error, setError, user } =
     useAuth();
+  const { userDetails } = useUserContext();
 
   const handleHidePassword = () => {
     setHidePassword((prev) => !prev);

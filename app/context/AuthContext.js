@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   // useQueryHook to get the user from the database once the saveToDb function has successfuly finished
-  useQuery({
+  const { isLoading, isError, isSuccess } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserDataFromDB(user?.email),
     enabled: finished,

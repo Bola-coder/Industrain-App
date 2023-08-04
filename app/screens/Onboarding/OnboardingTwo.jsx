@@ -5,7 +5,14 @@ import styles from "./style";
 const OnboardingTwo = ({ navigation }) => {
   return (
     <View style={styles.onboarding}>
-      <Text style={styles.skipText}>Skip</Text>
+      <View style={styles.skipTextContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Login")}
+          style={styles.skipTextButton}
+        >
+          <Text style={styles.skipText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.onboardingImageContainer}>
         <Image
           source={require("./../../../assets/GroupOfPeople.png")}

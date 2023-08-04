@@ -7,11 +7,23 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  skipText: {
+  skipTextContainer: {
+    position: "relative", // Relative positioning for the parent container
+    width: "100%",
+    height: "20%",
+    height: "8%",
+  },
+
+  skipTextButton: {
     position: "absolute",
-    right: 20,
-    top: 40,
-    fontSize: 20,
+    right: 10,
+    top: 20,
+    padding: 5,
+  },
+
+  skipText: {
+    fontSize: 24,
+    color: "#828282",
   },
 
   skipTextDark: {
@@ -23,11 +35,11 @@ const styles = StyleSheet.create({
   },
 
   onboardingImageContainer: {
-    height: "65%",
+    height: "60%",
   },
 
   onboardingImage: {
-    marginTop: 80,
+    marginTop: 20,
   },
 
   onboardingImageTwo: {

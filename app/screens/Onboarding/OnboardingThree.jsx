@@ -5,7 +5,14 @@ import styles from "./style";
 const OnboardingThree = ({ navigation }) => {
   return (
     <View style={[styles.onboarding, styles.onboardingDark]}>
-      <Text style={[styles.skipText, styles.skipTextDark]}>Skip</Text>
+      <View style={styles.skipTextContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Login")}
+          style={styles.skipTextButton}
+        >
+          <Text style={[styles.skipText, styles.skipTextDark]}>Skip</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.onboardingImageContainer}>
         <Image
           source={require("./../../../assets/WebGroup.png")}

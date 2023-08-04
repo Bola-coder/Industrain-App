@@ -15,12 +15,8 @@ import ScreenHeader from "../../components/ScreenHeader";
 
 const PersonalInformationScreen = ({ navigation }) => {
   const { user } = useAuth();
-  const {
-    userDetails,
-    updateUserDetails,
-    getUserDetails,
-    saveUserDetailsToDB,
-  } = useUserContext();
+  const { userDetails, updateUserDetails, saveUserDetailsToDB } =
+    useUserContext();
   const [name, setName] = useState(userDetails.name);
   const [phone, setPhone] = useState(userDetails.phone);
   const [gender, setGender] = useState(userDetails.gender);

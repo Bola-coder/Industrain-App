@@ -40,6 +40,7 @@ const StudentProfileSetting = ({ navigation, route }) => {
       navigation.navigate("StudentProfileSettingTwo", { id: 1 });
     } else if (id === 1) {
       const fieldTwo = { school, degree, course, level, passingYear };
+      console.log("Field Two is", fieldTwo);
       await updateUserDetails(fieldTwo);
       navigation.navigate("StudentProfileSettingThree", { id: 2 });
       // console.log(userDetails);
@@ -47,6 +48,7 @@ const StudentProfileSetting = ({ navigation, route }) => {
       // console.log({ ...userDetails });
       const fields = { ...userDetails };
       console.log("Email I am saving to", user?.email);
+      console.log("USer details being saved to firestore is", userDetails);
       saveUserDetailsToDB(user?.email, fields);
       navigation.navigate("Main");
     }
@@ -167,7 +169,7 @@ const StudentProfileSetting = ({ navigation, route }) => {
         </View>
       ) : id === 1 ? (
         <View style={styles.form}>
-          <Text style={styles.formHeader}>Personal Information</Text>
+          <Text style={styles.formHeader}>Educational Information</Text>
           <View style={styles.formGroup}>
             <TextInput
               placeholder="Name of School"

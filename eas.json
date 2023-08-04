@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 3.15.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "FIREBASE_APIKEY": "AIzaSyBuoWUrnzOCKsqjCumeaHn9RVyWn2dp-Vg",
+        "FIREBASE_AUTHDOMAIN": "industrain-84005.firebaseapp.com",
+        "FIREBASE_PROJECTID": "industrain-84005",
+        "FIREBASE_STORAGEBUCKET": "industrain-84005.appspot.com",
+        "FIREBASE_MESSAGINGSENDERID": "191662013136",
+        "FIREBASE_APPID": "1:191662013136:web:5260079117556603cd3cd5"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "FIREBASE_APIKEY": "AIzaSyBuoWUrnzOCKsqjCumeaHn9RVyWn2dp-Vg",
+        "FIREBASE_AUTHDOMAIN": "industrain-84005.firebaseapp.com",
+        "FIREBASE_PROJECTID": "industrain-84005",
+        "FIREBASE_STORAGEBUCKET": "industrain-84005.appspot.com",
+        "FIREBASE_MESSAGINGSENDERID": "191662013136",
+        "FIREBASE_APPID": "1:191662013136:web:5260079117556603cd3cd5"
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}
