@@ -1,13 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  chat: {
-    paddingHorizontal: 10,
-    backgroundColor: "#FFF",
-    minHeight: "100%",
+  notification: {
+    padding: 10,
     paddingBottom: 70,
   },
-
   searchInput: {
     width: "100%",
     alignSelf: "center",
@@ -39,9 +36,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
-  chatContent: {
-    paddingTop: 20,
+  notifications: {
+    marginTop: 20,
     paddingBottom: 70,
+    borderTopWidth: 2,
+    borderTopColor: "#E3E9EC",
   },
 });
 

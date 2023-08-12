@@ -20,6 +20,7 @@ import CompanyScreen from "../screens/Company/CompanyScreen";
 import PersonalInformationScreen from "../screens/PersonalInformation/PersonalInformationScreen";
 import SplashScreen from "../screens/Spalsh/SplashScreen";
 import EducationalInformationUpdate from "./../screens/EducationalInformation/EducationalInformationUpdateScreen";
+import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
 
 const AppContent = () => {
   const Stack = createNativeStackNavigator();
@@ -114,6 +115,11 @@ const AppContent = () => {
         <Stack.Screen
           name="EducationalInformation"
           component={EducationalInformationUpdate}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={NotificationScreen}
           options={{ headerShown: false }}
         />
 

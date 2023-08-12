@@ -86,7 +86,11 @@ const AccountScreen = ({ navigation }) => {
           <IonIcon name="document" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>Upload Document</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.accountSetting} activeOpacity={0.6}>
+        <TouchableOpacity
+          style={styles.accountSetting}
+          activeOpacity={0.6}
+          onPress={() => navigation.navigate("Notification")}
+        >
           <IonIcon name="notifications" size={30} color="#828282" />
           <Text style={styles.accountSettingText}>Notification</Text>
         </TouchableOpacity>

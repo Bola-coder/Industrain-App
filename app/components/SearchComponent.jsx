@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
 
   icon: {
     position: "absolute",
-    top: 15,
+    top: 12,
     left: 10,
-    opacity: 100,
+    zIndex: 10,
+    color: "#828282",
   },
 
   input: {
