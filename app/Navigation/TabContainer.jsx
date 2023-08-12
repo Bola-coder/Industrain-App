@@ -39,7 +39,7 @@ const TabContainer = () => {
         tabBarInactiveBackgroundColor: "#FFF",
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          height: 70,
+          height: 60,
           marginBottom: 0,
           paddingBottom: 5,
           //   borderRadius: 4,
