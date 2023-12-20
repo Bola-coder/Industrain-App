@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import FontAwesomeIcon from "@expo/vector-icons/FontAwesome";
+import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 
 const CategoriesCard = ({ category }) => {
   return (
     <TouchableOpacity style={styles.categoryCard} activeOpacity={0.8}>
       <View style={styles.categoryCardImg}>
-        {/* <FontAwesomeIcon name="filter" size={30} /> */}
-        <Image source={category.img} />
+        {/* <Image source={category.img} /> */}
+        <MaterialIcon name={category.iconName} size={30} color="#1B4A58" />
       </View>
-      <Text style={styles.categoryCardText}>{category.text}</Text>
+      <Text style={styles.categoryCardText}>{category.name}</Text>
     </TouchableOpacity>
   );
 };

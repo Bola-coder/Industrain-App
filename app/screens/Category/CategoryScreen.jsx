@@ -32,16 +32,16 @@ const MainCategoryCard = ({ iconName, text, subText, useFA }) => {
 const CategoryScreen = () => {
   const { getJobCategories, categories, loading } = useJobContext();
 
-  const categoryQuery = useQuery({
-    queryKey: "categories",
-    queryFn: getJobCategories,
-  });
+  // const categoryQuery = useQuery({
+  //   queryKey: "categories",
+  //   queryFn: getJobCategories,
+  // });
 
-  if (categoryQuery.isLoading) {
-    return;
-  } else if (categoryQuery.isError) {
-    return <Text>Something went wrong</Text>;
-  }
+  // if (categoryQuery.isLoading) {
+  //   return;
+  // } else if (categoryQuery.isError) {
+  //   return <Text>Something went wrong</Text>;
+  // }
   return (
     <View style={styles.category}>
       {/* Screen Header */}

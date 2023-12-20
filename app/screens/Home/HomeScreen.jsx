@@ -1,4 +1,4 @@
-import { View, Text, Image, Alert } from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import styles from "./styles";
 import SearchComponent from "../../components/SearchComponent";
@@ -8,35 +8,37 @@ import { ScrollView } from "react-native";
 import CompanyCard from "../../components/CompanyCard";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
+import { useJobContext } from "../../context/JobContext";
 import { useQuery } from "react-query";
 
 // HomeScreen
 const HomeScreen = ({ navigation }) => {
   const { user } = useAuth();
   const { userDetails, getUserDetails } = useUserContext();
+  const { getJobCategories, categories } = useJobContext();
 
-  const categories = [
-    {
-      img: require("./../../../assets/scienceIcon.png"),
-      text: "Science",
-    },
-    {
-      img: require("./../../../assets/artIcon.png"),
-      text: "Art",
-    },
-    {
-      img: require("./../../../assets/engineeringIcon.png"),
-      text: "Engineering",
-    },
-    {
-      img: require("./../../../assets/bankingIcon.png"),
-      text: "Finance",
-    },
-    {
-      img: require("./../../../assets/scienceIcon.png"),
-      text: "Agric",
-    },
-  ];
+  // const categories = [
+  //   {
+  //     img: require("./../../../assets/scienceIcon.png"),
+  //     text: "Science",
+  //   },
+  //   {
+  //     img: require("./../../../assets/artIcon.png"),
+  //     text: "Art",
+  //   },
+  //   {
+  //     img: require("./../../../assets/engineeringIcon.png"),
+  //     text: "Engineering",
+  //   },
+  //   {
+  //     img: require("./../../../assets/bankingIcon.png"),
+  //     text: "Finance",
+  //   },
+  //   {
+  //     img: require("./../../../assets/scienceIcon.png"),
+  //     text: "Agric",
+  //   },
+  // ];
 
   const topCompanies = [
     {
@@ -83,13 +85,23 @@ const HomeScreen = ({ navigation }) => {
     enabled: !!user,
   });
 
-  if (userDetailsQuery.isError) {
-    console.log("Error occured in Home User Query");
+  const jobQuery = useQuery({
+    queryKey: "categories",
+    queryFn: getJobCategories,
+  });
+
+  if (jobQuery.isError) {
+    console.log("Error occured in Home Job Query");
   }
-  if (userDetailsQuery.isSuccess) {
-    console.log("Query Data gotten from Home", userDetailsQuery.data);
-    console.log(userDetails);
-  }
+
+  // if (userDetailsQuery.isError) {
+  //   console.log("Error occured in Home User Query");
+  // }
+
+  // if (userDetailsQuery.isSuccess) {
+  //   console.log("Query Data gotten from Home", userDetailsQuery.data);
+  //   console.log(userDetails);
+  // }
   // HandleSearch function
   const handleSearch = () => {
     navigation.navigate("Search");
@@ -144,11 +156,19 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {categories.map((category, index) => (
-            <View key={index}>
-              <CategoriesCard category={category} />
+          {jobQuery.isLoading || jobQuery.isError ? (
+            <View
+              style={{ flex: 1, justifyContent: "center", alignItem: "center" }}
+            >
+              {/* <ActivityIndicator size={"large"} color={"#1B4A58"} /> */}
             </View>
-          ))}
+          ) : (
+            categories.map((category, index) => (
+              <View key={index}>
+                <CategoriesCard category={category} />
+              </View>
+            ))
+          )}
         </ScrollView>
       </View>
 

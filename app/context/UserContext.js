@@ -60,7 +60,7 @@ const UserProvider = ({ children }) => {
     try {
       const details = await AsyncStorage.getObjectData("@userDetails");
       if (details) {
-        console.log("User details fetched from AsyncStorage", details);
+        // console.log("User details fetched from AsyncStorage", details);
         setUserDetails(details);
       } else {
         const userQuery = query(colRef, where("email", "==", email));
@@ -71,7 +71,7 @@ const UserProvider = ({ children }) => {
           const docData = (await getDoc(userDocRef)).data();
           setUserDetails(docData);
           updateUserDetails(docData);
-          console.log("User details fetched from Firestore", docData);
+          // console.log("User details fetched from Firestore", docData);
         }
       }
     } catch (err) {
