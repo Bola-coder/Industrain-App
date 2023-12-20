@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { auth, db } from "./../libraries/firabse";
+import { auth, db } from "../libraries/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -69,114 +69,102 @@ const AuthProvider = ({ children }) => {
   };
 
   // Functiomn to save user to database
-  const saveUserToDB = (user) => {
-    let userExist;
-    // console.log("Working!!");
-    getDocs(colRef)
-      .then((snapshot) => {
-        userExist = snapshot.docs.some((doc) => {
-          return doc.data().email === user.email;
+  const saveUserToDB = async (user) => {
+    try {
+      const snapshot = await getDocs(colRef);
+      const userExists = snapshot.docs.some(
+        (doc) => doc.data().email === user.email
+      );
+
+      if (!userExists) {
+        await addDoc(colRef, {
+          email: user.email,
+          uid: user.uid,
+          name: "",
+          phone: "",
+          gender: "",
+          address: "",
+          dob: "",
+          school: "",
+          degree: "",
+          course: "",
+          level: "",
+          passingYear: "",
+          // Other user profile information...
         });
-      })
-      .then(() => {
-        // console.log(userExist);
-        if (!userExist) {
-          addDoc(colRef, {
-            email: user.email,
-            uid: user.uid,
-            name: "",
-            phone: "",
-            gender: "",
-            address: "",
-            dob: "",
-            school: "",
-            degree: "",
-            course: "",
-            level: "",
-            passingYear: "",
-          })
-            .then(() => {
-              console.log("User profile created successfully");
-              setFinished(true);
-            })
-            .catch((err) => {
-              console.log("Error when creating user profile", err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.log("Error when getting users from db", err);
-      });
+        console.log("User profile created successfully");
+        setFinished(true);
+      }
+    } catch (err) {
+      console.log("Error when creating user profile", err);
+    }
   };
 
   // Get user's data from Firestore, and them save the user to the users state and asyncStorage
-  const getUserDataFromDB = (email) => {
-    let activeUser;
-    getDocs(colRef)
-      .then((snapshot) => {
-        activeUser = snapshot.docs.find((doc) => {
-          return doc.data().email === email;
-        });
-      })
-      .then(async () => {
+  const getUserDataFromDB = async (email) => {
+    try {
+      const snapshot = await getDocs(colRef);
+      const activeUser = snapshot.docs.find(
+        (doc) => doc.data().email === email
+      );
+
+      if (activeUser) {
         setUser(activeUser.data());
         await AsyncStorage.storeData("@userData", activeUser.data());
-      })
-      .catch((err) => {
-        console.log("Error fetching currently logged in user profile", err);
-      });
+      }
+    } catch (err) {
+      console.log("Error fetching currently logged in user profile", err);
+    }
   };
 
   const signup = async (email, password) => {
     setAuthLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredentials) => {
-        let uid = userCredentials?.user.uid;
-        let curuser = { email, uid };
-        saveUserToDB(curuser);
-        await AsyncStorage.storeData("@userData", { email, password });
-      })
-      .catch((err) => {
-        console.log("An error occured during sign up", err);
-        handleFirebaseAuthErrors(err);
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const uid = userCredentials?.user.uid;
+      const curUser = { email, uid };
+      await saveUserToDB(curUser);
+      await AsyncStorage.storeData("@userData", { email, password });
+    } catch (err) {
+      console.log("An error occurred during sign up", err);
+      handleFirebaseAuthErrors(err);
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const login = async (email, password) => {
     setAuthLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async (userCredentials) => {
-        setFinished(true);
-        await AsyncStorage.storeData("@userData", { email, password });
-        // getUserDataFromDB(email);
-      })
-      .catch((err) => {
-        console.log("An error occured during log in", err.message);
-        handleFirebaseAuthErrors(err);
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setFinished(true);
+      await AsyncStorage.storeData("@userData", { email, password });
+    } catch (err) {
+      console.log("An error occurred during log in", err.message);
+      handleFirebaseAuthErrors(err);
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const logout = async () => {
     console.log("Signing out");
-    await signOut(auth)
-      .then(async () => {
-        try {
-          await AsyncStorage.deleteDataFromStorage("@userData");
-          setAuthenticated(false);
-          console.log("User signed out successfully");
-        } catch (err) {
-          console.log("Failed to signout");
-        }
-      })
-      .catch((err) => {
-        console.log("Error while signing out", err);
-      });
+    try {
+      await signOut(auth);
+      await AsyncStorage.deleteDataFromStorage("@userData");
+      setAuthenticated(false);
+      console.log("User signed out successfully");
+    } catch (err) {
+      console.log("Error while signing out", err);
+    }
   };
 
   // const getCurrentUserSession =

@@ -6,13 +6,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect } from "react";
+import { useQuery } from "react-query";
 import styles from "./style";
 import ScreenHeader from "../../components/ScreenHeader";
 import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import { useJobContext } from "../../context/JobContext";
 
-// Component card for the Category
+// Component card for the Category Screen
 const MainCategoryCard = ({ iconName, text, subText, useFA }) => {
   return (
     <TouchableOpacity style={styles.categoryCard} activeOpacity={0.8}>
@@ -30,17 +31,17 @@ const MainCategoryCard = ({ iconName, text, subText, useFA }) => {
 // Category Screen
 const CategoryScreen = () => {
   const { getJobCategories, categories, loading } = useJobContext();
-  useEffect(() => {
-    const handleCategories = async () => {
-      try {
-        await getJobCategories();
-      } catch (err) {
-        // just to await the categories function being completed. No exceptions to catch
-      }
-    };
-    handleCategories();
-  }, []);
 
+  const categoryQuery = useQuery({
+    queryKey: "categories",
+    queryFn: getJobCategories,
+  });
+
+  if (categoryQuery.isLoading) {
+    return;
+  } else if (categoryQuery.isError) {
+    return <Text>Something went wrong</Text>;
+  }
   return (
     <View style={styles.category}>
       {/* Screen Header */}

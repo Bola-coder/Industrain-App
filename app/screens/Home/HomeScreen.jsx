@@ -81,7 +81,6 @@ const HomeScreen = ({ navigation }) => {
     queryKey: ["userDetails"],
     queryFn: () => getUserDetails(user?.email),
     enabled: !!user,
-    staleTime: 0,
   });
 
   if (userDetailsQuery.isError) {

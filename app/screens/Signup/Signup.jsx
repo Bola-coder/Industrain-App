@@ -17,6 +17,7 @@ const Signup = ({ navigation }) => {
   const handleHidePassword = () => {
     setHidePassword((prev) => !prev);
   };
+
   const handleSignup = async () => {
     if (!email || !password) {
       setError("Please provide email and password");

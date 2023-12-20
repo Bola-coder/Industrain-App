@@ -16,7 +16,7 @@ import AppPicker from "../../components/AppPicker";
 import AppDatePicker from "../../components/AppDatePicker";
 
 const StudentProfileSetting = ({ navigation, route }) => {
-  const { userDetails, updateUserDetails, saveUserDetailsToDB } =
+  const { userDetails, updateUserDetails, updateUserDetailsToDB } =
     useUserContext();
   const { user } = useAuth();
 
@@ -49,7 +49,7 @@ const StudentProfileSetting = ({ navigation, route }) => {
       const fields = { ...userDetails };
       console.log("Email I am saving to", user?.email);
       console.log("USer details being saved to firestore is", userDetails);
-      saveUserDetailsToDB(user?.email, fields);
+      updateUserDetailsToDB(user?.email, fields);
       navigation.navigate("Main");
     }
   };

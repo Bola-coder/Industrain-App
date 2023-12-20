@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { db } from "../libraries/firabse";
+import { db } from "../libraries/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { set } from "react-native-reanimated";
 const JobContext = createContext();
 
 export const useJobContext = () => {
@@ -16,23 +17,21 @@ const JobProvider = ({ children }) => {
     // getJobCategories();
   }, []);
 
-  const getJobCategories = () => {
+  const getJobCategories = async () => {
     setCategories([]);
     setLoading(true);
-    getDocs(categoryColRef)
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          if (!categories.includes(doc.data())) {
-            setCategories((prev) => [...prev, doc.data()]);
-          }
-        });
-      })
-      .catch((err) => {
-        console.error("Error while fetching categories from firebase", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const categorySnapshot = await getDocs(categoryColRef);
+      const categoryList = categorySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCategories(categoryList);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error getting category documents: ", error);
+      setLoading(false);
+    }
   };
 
   const values = {
