@@ -17,29 +17,6 @@ const HomeScreen = ({ navigation }) => {
   const { userDetails, getUserDetails } = useUserContext();
   const { getJobCategories, categories } = useJobContext();
 
-  // const categories = [
-  //   {
-  //     img: require("./../../../assets/scienceIcon.png"),
-  //     text: "Science",
-  //   },
-  //   {
-  //     img: require("./../../../assets/artIcon.png"),
-  //     text: "Art",
-  //   },
-  //   {
-  //     img: require("./../../../assets/engineeringIcon.png"),
-  //     text: "Engineering",
-  //   },
-  //   {
-  //     img: require("./../../../assets/bankingIcon.png"),
-  //     text: "Finance",
-  //   },
-  //   {
-  //     img: require("./../../../assets/scienceIcon.png"),
-  //     text: "Agric",
-  //   },
-  // ];
-
   const topCompanies = [
     {
       id: 0,

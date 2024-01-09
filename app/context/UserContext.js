@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { db } from "../libraries/firebase";
+import { storage } from "../libraries/firebase";
 import {
   collection,
   doc,
@@ -9,6 +10,7 @@ import {
   getDocs,
   getDoc,
 } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
 import { useAuth } from "./AuthContext";
 import AsyncStorage from "./../utils/AsyncStorage";
 
@@ -110,12 +112,36 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const uploadProfileImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    console.log(response);
+    console.log(blob);
+
+    const imageName = userDetails.email + "-" + Date.now() + ".jpg";
+    const storageRef = ref(storage, "images/" + imageName);
+    const uploadTask = uploadBytes(storageRef, blob);
+
+    uploadTask
+      .then((snapshot) => {
+        console.log("Image uploaded!", snapshot);
+
+        // You can retrieve the download URL for the uploaded image
+        const downloadURL = snapshot.ref.getDownloadURL();
+        console.log("Download URL:", downloadURL);
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      });
+  };
+
   const values = {
     userDetails,
     updateUserDetails,
     getUserDetails,
     updateUserDetailsToDB,
     clearUserDetails,
+    uploadProfileImage,
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

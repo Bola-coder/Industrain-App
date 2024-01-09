@@ -14,11 +14,13 @@ import ScreenHeader from "../../components/ScreenHeader";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
 import ConfirmationModal from "../../components/confirmationModal";
+import UseImagePicker from "../../hook/useImagePicker";
 
 const AccountScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
-  const { userDetails, clearUserDetails, getUserDetails } = useUserContext();
+  const { userDetails, clearUserDetails } = useUserContext();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [image, pickImage] = UseImagePicker();
 
   const handleLogout = async () => {
     await logout();
@@ -26,6 +28,7 @@ const AccountScreen = ({ navigation }) => {
     Alert.alert("Signout successful");
     navigation.navigate("Login");
   };
+
   return (
     <ScrollView
       contentContainerStyle={styles.account}
@@ -41,10 +44,18 @@ const AccountScreen = ({ navigation }) => {
           />
           <View style={styles.profileImageContainer}>
             <Image
-              source={require("./../../../assets/sampleDP.png")}
+              source={
+                image
+                  ? { uri: image }
+                  : require("./../../../assets/sampleDP.png")
+              }
               style={styles.profileImage}
             />
-            <TouchableOpacity style={styles.upload} activeOpacity={0.7}>
+            <TouchableOpacity
+              style={styles.upload}
+              activeOpacity={0.7}
+              onPress={pickImage}
+            >
               <FontAwesomeIcon name="camera" size={20} />
             </TouchableOpacity>
           </View>
